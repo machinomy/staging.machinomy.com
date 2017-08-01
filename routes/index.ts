@@ -10,7 +10,6 @@ const FAUCET_ACCOUNT = config.get('FAUCET_ACCOUNT')
 const FAUCET_PASSWORD = config.get('FAUCET_PASSWORD')
 
 web3.personal.unlockAccount(FAUCET_ACCOUNT, FAUCET_PASSWORD, 10000000)
-// let balance =  web3.fromWei(web3.eth.getBalance(FAUCET_ACCOUNT))
 
 router.get('/faucet', (req: express.Request, res: express.Response, next: express.NextFunction) => {
   res.sendFile('./views/faucet.html', { root: '.' })
@@ -18,12 +17,9 @@ router.get('/faucet', (req: express.Request, res: express.Response, next: expres
 
 router.post('/api/request', function(req: express.Request, res: express.Response, next: express.NextFunction) {
     let callFaucet = (address: String, callback: Function) => {
-      web3.eth.sendTransaction({from: FAUCET_ACCOUNT, to: address, value: web3.toWei(0.01, 'ether')}, callback);
+      web3.eth.sendTransaction({from: FAUCET_ACCOUNT, to: address, value: web3.toWei(0.01, 'ether')}, callback)
     }
-
-    let address = req.body.address;
-    console.log('address');
-    console.log(address);
+    let address = req.body.address
     if (address) {
       callFaucet(address, function (err: any, txid: String) {
         if (err) {
@@ -35,7 +31,7 @@ router.post('/api/request', function(req: express.Request, res: express.Response
         }
       })
     } else {
-      res.writeHead(400, 'No Address');
-      res.end();
+      res.writeHead(400, 'No Address')
+      res.end()
     }
 });
