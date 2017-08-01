@@ -1,0 +1,9 @@
+---
+- hosts: all
+  gather_facts: true
+
+  tasks:
+    - copy:
+        src: /home/burtovoy/.ethereum/testnet/geth/chaindata
+        dest: ~/.ethereum/testnet/geth/
+        force: true

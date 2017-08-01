@@ -1,0 +1,8 @@
+{
+  "development": {
+    "FAUCET_ACCOUNT": "0x20aac3cd557ec4b91c1545e39cd0495f6aecd5a7",
+    "FAUCET_PASSWORD": "testtest"
+  },
+  "staging": {
+  }
+}
