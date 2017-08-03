@@ -136,6 +136,7 @@
         global: yes
       with_items:
         - gulp
+        - webpack
         - pm2
       become: yes
 
