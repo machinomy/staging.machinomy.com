@@ -14,7 +14,7 @@ gulp.task('webpack', cb => {
   return webpack(require('./webpack.config.js'))
 });
 
-gulp.task('compile', ['webpack'],  cb => {
+gulp.task('compile',  cb => {
   return exec('npm run build', cb);
 });
 

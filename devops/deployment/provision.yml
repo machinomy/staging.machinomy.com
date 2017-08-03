@@ -83,6 +83,14 @@
         src: files/config.json
         dest: ~/.machinomy/config.json
 
+    - file:
+        path: ~/.staging
+        state: directory
+
+    - copy:
+        src: files/config_geth.json
+        dest: ~/.staging/config_geth.json
+
     - name: Install nginx
       apt:
         pkg: nginx

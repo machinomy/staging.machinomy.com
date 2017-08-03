@@ -1,18 +1,26 @@
 import * as express from 'express';
 export let router = express.Router();
-const machinomy = require('machinomy');
-// console.log(machinomy);
-// const settings = machinomy.configuration.receiver()
-const config = require('config');
-// let web3 = machinomy.configuration.web3()
-
 import Web3 = require("web3")
-let web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"))
-// web3.personal.unlockAccount(settings.account, settings.password, 10000000)
+
+const config = require('config');
+
+interface GethConf {
+  host: string;
+  port: string;
+}
+let config_geth:GethConf = {host: 'localhost', port: '8545'}
+try {
+  config_geth = require('~/.staging/config_geth.json')
+} catch (e) {
+  console.log('config file read error')
+}
+
+const geth_host = config_geth.host
+const geth_port = config_geth.port
+let web3 = new Web3(new Web3.providers.HttpProvider(`http://${geth_host}:${geth_port}`))
 
 const FAUCET_ACCOUNT = config.get('FAUCET_ACCOUNT')
 const FAUCET_PASSWORD = config.get('FAUCET_PASSWORD')
-
 web3.personal.unlockAccount(FAUCET_ACCOUNT, FAUCET_PASSWORD, 10000000)
 
 router.get('/faucet', (req: express.Request, res: express.Response, next: express.NextFunction):any => {
