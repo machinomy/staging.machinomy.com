@@ -75,6 +75,14 @@
         update_cache: yes
       become: yes
 
+    - file:
+        path: ~/.machinomy
+        state: directory
+
+    - copy:
+        src: files/config.json
+        dest: ~/.machinomy/config.json
+
     - name: Install nginx
       apt:
         pkg: nginx
@@ -116,8 +124,11 @@
 
     - name: Install gulp
       npm:
-        name: gulp
+        name: "{{item}}"
         global: yes
+      with_items:
+        - gulp
+        - pm2
       become: yes
 
     - name: Creates directory

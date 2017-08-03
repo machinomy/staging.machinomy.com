@@ -3,12 +3,19 @@ const ts = require('gulp-typescript');
 const del = require('del');
 const gulpCopy = require('gulp-copy');
 const nodemon = require('gulp-nodemon');
+const webpack = require('webpack');
+const exec = require('child_process').exec
 
 // pull in the project TypeScript config
 const tsProject = ts.createProject('tsconfig.json');
 
-gulp.task('compile', () => {
-  return tsResult = tsProject.src().pipe(tsProject()).js.pipe(gulp.dest('.'));
+
+gulp.task('webpack', cb => {
+  return webpack(require('./webpack.config.js'))
+});
+
+gulp.task('compile', ['webpack'],  cb => {
+  return exec('npm run build', cb);
 });
 
 gulp.task('clean', function(cb) {
