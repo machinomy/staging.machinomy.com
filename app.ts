@@ -6,6 +6,7 @@ import * as cookieParser from 'cookie-parser';
 import * as bodyParser from 'body-parser';
 
 import { router as routes } from './routes/index';
+import { router as paid } from './routes/paid';
 
 export let app = express();
 
@@ -22,6 +23,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
+app.use('/paid', paid);
 
 // catch 404 and forward to error handler
 app.use((req: express.Request, res: express.Response, next: express.NextFunction) => {

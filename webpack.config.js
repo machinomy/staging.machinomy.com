@@ -8,6 +8,7 @@ module.exports = {
     context: srcPath,
     entry: {
         faucet: './faucet.ts',
+        paid: './paid.ts',
     },
     output: {
         path: distPath,
