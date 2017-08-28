@@ -11,7 +11,7 @@
     "env_staging" : {
       "PAYWALL_GATEWAY": "https://hub.machinomy.com/machinomy",
       "NODE_CONFIG_DIR": "/home/ubuntu/.staging",
-      "NODE_ENV": "production",
+      "NODE_ENV": "staging",
       "PORT": "3000"
     }
   }]
