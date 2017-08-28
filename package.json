@@ -4,7 +4,8 @@
   "scripts": {
     "start": "./node_modules/.bin/gulp watch",
     "postinstall": "./node_modules/.bin/typings install",
-    "build": "tsc -p tsconfig.json"
+    "build": "tsc -p tsconfig.json",
+    "deploy": "ansible-playbook -i deploy/hosts deploy/deploy.yml"
   },
   "dependencies": {
     "@types/body-parser": "^1.16.4",

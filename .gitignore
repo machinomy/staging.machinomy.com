@@ -28,7 +28,7 @@ benchmarks/graphs
 #vagrant
 .vagrant
 
-config/development.json
+config
 app.js
 bin/**/*.js
 public/**/*.js

@@ -1,0 +1,94 @@
+---
+- hosts: all
+  gather_facts: true
+
+  vars:
+    machinomy_path: '~/machinomy'
+    ynos_path: '~/ynos'
+    staging_path: '~/staging'
+
+  environment:
+    NODE_ENV: vagrant
+
+  tasks:
+    # - name: machinomy
+    #   git:
+    #     repo: https://github.com/machinomy/machinomy
+    #     dest: "{{ machinomy_path }}"
+    #     force: yes
+    #     update: yes
+    #     accept_hostkey: yes
+    #
+    # - command: yarn install
+    #   args:
+    #     chdir: "{{ machinomy_path }}"
+    #
+    # - command: yarn run build
+    #   args:
+    #     chdir: "{{ machinomy_path }}"
+    #
+    # - name: ynos
+    #   git:
+    #     repo: git@github.com:machinomy/ynos.git
+    #     dest: "{{ ynos_path }}"
+    #     force: yes
+    #     update: yes
+    #     accept_hostkey: yes
+    #
+    # - command: yarn install
+    #   args:
+    #     chdir: "{{ ynos_path }}"
+    #
+    # - command: yarn run build
+    #   args:
+    #     chdir: "{{ ynos_path }}"
+    #
+    # - command: yarn run build:harness
+    #   args:
+    #     chdir: "{{ ynos_path }}"
+    #
+    - name: staging
+      git:
+        repo: git@github.com:machinomy/staging.machinomy.com.git
+        dest: "{{ staging_path }}"
+        force: yes
+        update: yes
+        accept_hostkey: yes
+
+    - command: yarn install
+      args:
+        chdir: "{{ staging_path }}"
+
+    - command: yarn run build
+      args:
+        chdir: "{{ staging_path }}"
+
+    - command: webpack
+      args:
+        chdir: "{{ staging_path }}"
+    #
+    # - copy:
+    #     remote_src: true
+    #     src: "{{ ynos_path }}/dist/{{item}}"
+    #     dest: "{{ staging_path }}/public/"
+    #   with_items:
+    #     - ynos.bundle.js
+    #     - ynos.bundle.js.map
+    #     - frame.bundle.js
+    #     - frame.bundle.js.map
+    #     - worker.bundle.js
+    #     - worker.bundle.js.map
+    #
+    # - copy:
+    #     remote_src: true
+    #     src: "{{ ynos_path }}/ynos/frame.html"
+    #     dest: "{{ staging_path }}/public/"
+
+    - command: pm2 restart bin/www.js
+      environment:
+        PAYWALL_GATEWAY: https://hub.machinomy.com/machinomy
+        NODE_CONFIG_DIR: "~/.staging"
+        NODE_ENV: staging
+        PORT: 3000
+      args:
+        chdir: "{{ staging_path }}"

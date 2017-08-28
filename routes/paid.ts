@@ -25,8 +25,8 @@ const paywallHeaders = (): object => {
   let headers: { [index: string]: string } = {}
   headers['Paywall-Version'] = '0.0.3'
   headers['Paywall-Price'] = '0.1'
-  headers['Paywall-Address'] = '0x3e9c7d7fe1e4d335e34b3952b1dfd5fa3df7c3f1'
-  headers['Paywall-Gateway'] = 'http://localhost:4000/machinomy'
+  headers['Paywall-Address'] = process.env.PAYWALL_ADDRESS || '0x3e9c7d7fe1e4d335e34b3952b1dfd5fa3df7c3f1'
+  headers['Paywall-Gateway'] = process.env.PAYWALL_GATEWAY || 'http://localhost:3001/machinomy'
   return headers
 }
 
