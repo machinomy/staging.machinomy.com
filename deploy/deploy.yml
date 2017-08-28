@@ -7,8 +7,11 @@
     ynos_path: '~/ynos'
     staging_path: '~/staging'
 
-  environment:
-    NODE_ENV: vagrant
+  # environment:
+    # PAYWALL_GATEWAY: "https://hub.machinomy.com/machinomy"
+    # NODE_CONFIG_DIR: "/home/ubuntu/.staging"
+    # NODE_ENV: production
+    # PORT: 3001
 
   tasks:
     # - name: machinomy
@@ -79,16 +82,12 @@
     #     - worker.bundle.js
     #     - worker.bundle.js.map
     #
-    # - copy:
-    #     remote_src: true
-    #     src: "{{ ynos_path }}/ynos/frame.html"
-    #     dest: "{{ staging_path }}/public/"
 
-    - command: pm2 restart bin/www.js
-      environment:
-        PAYWALL_GATEWAY: https://hub.machinomy.com/machinomy
-        NODE_CONFIG_DIR: "~/.staging"
-        NODE_ENV: staging
-        PORT: 3000
+    # - copy:
+    #    remote_src: true
+    #    src: "/home/ubuntu/.staging/staging.json"
+    #    dest: "/home/ubuntu/staging/config"
+
+    - command: pm2 restart ecosystem.json --env staging
       args:
         chdir: "{{ staging_path }}"
