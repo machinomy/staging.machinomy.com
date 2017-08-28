@@ -5,7 +5,8 @@
   vars:
     nodejs_version: "6"
     debian_repo_version: "6.x"
-    site_name: 192.168.50.4
+    hub_name: hub.machinomy.com
+    site_name: staging.machinomy.com
     site_dir: /home/vagrant/ynos/dist
     letsencrypt_email: sergey.ukustov@machinomy.com
     yarn_version: '0.27.5'
@@ -113,6 +114,19 @@
       file:
         src: "/etc/nginx/sites-available/{{site_name}}.conf"
         dest: "/etc/nginx/sites-enabled/{{site_name}}.conf"
+        state: link
+      become: yes
+
+    - name: Copy the hub config
+      template:
+        src: templates/hub.conf.j2
+        dest: "/etc/nginx/sites-available/{{hub_name}}.conf"
+      become: yes
+
+    - name: Activate the hub
+      file:
+        src: "/etc/nginx/sites-available/{{hub_name}}.conf"
+        dest: "/etc/nginx/sites-enabled/{{hub_name}}.conf"
         state: link
       become: yes
 

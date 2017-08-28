@@ -15,6 +15,7 @@
       git:
         repo: https://github.com/machinomy/machinomy
         dest: "{{ machinomy_path }}"
+        force: yes
         update: yes
         accept_hostkey: yes
 
