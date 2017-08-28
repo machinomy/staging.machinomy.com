@@ -1,0 +1,18 @@
+{
+  "apps" : [{
+    "name"        : "app",
+    "script"      : "bin/www.js",
+    "env": {
+      "NODE_ENV": "development",
+    },
+    "env_production" : {
+       "NODE_ENV": "production"
+    },
+    "env_staging" : {
+      "PAYWALL_GATEWAY": "https://hub.machinomy.com/machinomy",
+      "NODE_CONFIG_DIR": "/home/ubuntu/.staging",
+      "NODE_ENV": "production",
+      "PORT": "3000"
+    }
+  }]
+}
