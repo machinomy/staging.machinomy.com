@@ -101,6 +101,13 @@
     "@types/form-data" "*"
     "@types/node" "*"
 
+"@types/request@^2.0.3":
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/@types/request/-/request-2.0.3.tgz#bdf0fba9488c822f77e97de3dd8fe357b2fb8c06"
+  dependencies:
+    "@types/form-data" "*"
+    "@types/node" "*"
+
 "@types/serve-favicon@^2.2.28":
   version "2.2.28"
   resolved "https://registry.yarnpkg.com/@types/serve-favicon/-/serve-favicon-2.2.28.tgz#f5aae24eafeeb202dfb7983e27c152a8810eaab5"

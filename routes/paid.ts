@@ -4,9 +4,12 @@ export let router = express.Router();
 export const HEADER_NAME = 'authorization'
 export const TOKEN_NAME = 'paywall'
 
+import Promise = require('bluebird')
+import { RequestResponse, RequiredUriUrl, CoreOptions } from 'request'
+const request: (opts: RequiredUriUrl & CoreOptions) => Promise<RequestResponse> = Promise.promisify(require('request'))
+
 const parseToken = (req: express.Request, callback: Function) => {
   let content = req.get(HEADER_NAME)
-   console.log(content)
   if (content) {
     let authorization = content.split(' ')
     let type = authorization[0].toLowerCase()
@@ -35,11 +38,19 @@ router.get('/', (req: express.Request, res: express.Response, next: express.Next
 });
 
 router.get('/content', function(req: express.Request, res: express.Response, next: express.NextFunction) {
+  let reqUrl = process.env.VERIFY_TOKEN_ADDRESS || 'http://localhost:3001/verify'
   parseToken(req, (error:Error, token:string) => {
-    if (token == '228') {
-      res.send('rich content')
-    } else {
-      res.send('bitch content')
-    }
+    request({
+      method: 'GET',
+      uri: reqUrl,
+      form: {token: token},
+    }).then((response: RequestResponse)=>{
+      let status = JSON.parse(response.body).status
+      if (status == 'ok') {
+        res.send('rich content')
+      } else {
+        res.send('bitch content')
+      }
+    })
   })
 });
