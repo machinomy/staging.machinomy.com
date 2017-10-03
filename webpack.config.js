@@ -8,11 +8,11 @@ module.exports = {
     context: srcPath,
     entry: {
         faucet: './faucet.ts',
-        paid: './paid.ts',
+        paid: './paid.js',
     },
     output: {
         path: distPath,
-        filename: '[name].js',
+        filename: '[name].bundle.js',
     },
     resolve: {
         modules: ["node_modules"],

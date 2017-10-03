@@ -30,6 +30,7 @@ benchmarks/graphs
 
 config
 app.js
+helpers/**/*.js
 bin/**/*.js
-public/**/*.js
+public/**/*.bundle.js
 routes/**/*.js

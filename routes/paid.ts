@@ -3,7 +3,7 @@ export let router = express.Router();
 
 export const HEADER_NAME = 'authorization'
 export const TOKEN_NAME = 'paywall'
-
+import { paywallHeaders, paywallHeadersERC20 } from '../helpers/headers'
 import Promise = require('bluebird')
 import { RequestResponse, RequiredUriUrl, CoreOptions } from 'request'
 const request: (opts: RequiredUriUrl & CoreOptions) => Promise<RequestResponse> = Promise.promisify(require('request'))
@@ -24,17 +24,12 @@ const parseToken = (req: express.Request, callback: Function) => {
   }
 }
 
-const paywallHeaders = (): object => {
-  let headers: { [index: string]: string } = {}
-  headers['Paywall-Version'] = '0.0.3'
-  headers['Paywall-Price'] = '0.1'
-  headers['Paywall-Address'] = process.env.PAYWALL_ADDRESS || '0x3e9c7d7fe1e4d335e34b3952b1dfd5fa3df7c3f1'
-  headers['Paywall-Gateway'] = process.env.PAYWALL_GATEWAY || 'http://localhost:3001/machinomy'
-  return headers
-}
-
 router.get('/', (req: express.Request, res: express.Response, next: express.NextFunction):any => {
-  res.status(402).set(paywallHeaders()).sendFile('./views/paid.html', { root: '.' })
+  res.render('paid')
+});
+
+router.get('/erc20', (req: express.Request, res: express.Response, next: express.NextFunction): any => {
+  res.status(402).set(paywallHeadersERC20()).sendFile('./views/paid.html', { root: '.' })
 });
 
 router.get('/content', function(req: express.Request, res: express.Response, next: express.NextFunction) {

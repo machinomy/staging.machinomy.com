@@ -1,0 +1,37 @@
+<div class="ui text container">
+  <h2 class="ui dividing header">Ethereum</h1>
+  <table class="ui celled table">
+    <thead>
+      <tr>
+        <th>Address</th>
+        <th>Balance</th>
+      </tr>
+    </thead>
+    <tbody>
+       {{#each addrs}}
+      <tr>
+        <td>{{address}}</td>
+        <td>{{balance}}</td>
+      </tr>
+       {{/each}}
+    </tbody>
+  </table>
+
+  <h2 class="ui dividing header">ERC20</h1>
+    <table class="ui celled table">
+      <thead>
+        <tr>
+          <th>Address</th>
+          <th>Balance</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each addrsERC20}}
+        <tr>
+          <td>{{address}}</td>
+          <td>{{balance}}</td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+</div>
