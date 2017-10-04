@@ -20,10 +20,10 @@ window.addEventListener("load", function () {
     let provider = instance.provider
     let web3 = new Web3(provider)
     web3.eth.getAccounts((err, accounts) => {
-      const vynocAddress = accounts[0]
-      const vynocBalance = web3.fromWei(web3.eth.getBalance(accounts), 'ether')
-      $('#vynos-address').html(vynocAddress)
-      $('#vynos-balance').html(vynocBalance)
+      const vynosAddress = accounts[0]
+      const vynosBalance = web3.fromWei(web3.eth.getBalance(accounts), 'ether')
+      $('#vynos-address').html(vynosAddress)
+      $('#vynos-balance').html(vynosBalance)
     })
   })
 });
