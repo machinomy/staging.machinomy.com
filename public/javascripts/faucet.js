@@ -5,7 +5,7 @@ window.addEventListener("load", function () {
     $.ajax({
       type: 'POST',
       url: '/faucet/request',
-      data: JSON.stringify({address: ynosAddress}),
+      data: JSON.stringify({address: vynosAddress}),
       contentType: 'application/json',
       success: (data) => {
         let txid = data.txid;
@@ -19,7 +19,7 @@ window.addEventListener("load", function () {
     let provider = instance.provider
     let web3 = new Web3(provider)
     web3.eth.getAccounts((err, accounts) => {
-      const vynosAddress = accounts[0]
+      window.vynosAddress = accounts[0]
       $('#vynos-address').html(vynosAddress)
       web3.eth.getBalance(vynosAddress, (err, balance) => {
         const vynosBalance = web3.fromWei(balance, 'ether').toString()
