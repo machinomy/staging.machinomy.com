@@ -7,7 +7,7 @@ const FAUCET_PASSWORD = config.get('FAUCET_PASSWORD')
 // web3.personal.unlockAccount(FAUCET_ACCOUNT, FAUCET_PASSWORD, 10000000)
 
 router.get('/faucet', (req: express.Request, res: express.Response, next: express.NextFunction):any => {
-  res.sendFile('./views/faucet.html', { root: '.' })
+  res.render('faucet')
 });
 
 router.post('/faucet/request', function(req: express.Request, res: express.Response, next: express.NextFunction) {

@@ -4,10 +4,23 @@
 
   vars:
     machinomy_path: '~/machinomy'
-    ynos_path: '~/ynos'
+    vynos_path: '~/vynos'
     staging_path: '~/staging'
+    machinomy_contracts_path: '~/machinomy-contracts'
 
   tasks:
+    - name: machinomy-contracts
+      git:
+        repo: https://github.com/machinomy/machinomy-contracts
+        dest: "{{ machinomy_contracts_path }}"
+        force: yes
+        update: yes
+        accept_hostkey: yes
+
+    - command: yarn install
+      args:
+        chdir: "{{ machinomy_contracts_path }}"
+
     - name: machinomy
       git:
         repo: https://github.com/machinomy/machinomy
@@ -26,23 +39,23 @@
 
     - name: ynos
       git:
-        repo: git@github.com:machinomy/ynos.git
-        dest: "{{ ynos_path }}"
+        repo: git@github.com:machinomy/vynos.git
+        dest: "{{ vynos_path }}"
         force: yes
         update: yes
         accept_hostkey: yes
 
     - command: yarn install
       args:
-        chdir: "{{ ynos_path }}"
+        chdir: "{{ vynos_path }}"
 
     - command: yarn run build
       args:
-        chdir: "{{ ynos_path }}"
+        chdir: "{{ vynos_path }}"
 
     - command: yarn run build:harness
       args:
-        chdir: "{{ ynos_path }}"
+        chdir: "{{ vynos_path }}"
 
     - name: staging
       git:
@@ -66,11 +79,11 @@
 
     - copy:
         remote_src: true
-        src: "{{ ynos_path }}/dist/{{item}}"
+        src: "{{ vynos_path }}/dist/{{item}}"
         dest: "{{ staging_path }}/public/"
       with_items:
-        - ynos.bundle.js
-        - ynos.bundle.js.map
+        - vynos.bundle.js
+        - vynos.bundle.js.map
         - frame.bundle.js
         - frame.bundle.js.map
         - worker.bundle.js
