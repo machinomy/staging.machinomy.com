@@ -6,6 +6,10 @@ const FAUCET_ACCOUNT = config.get('FAUCET_ACCOUNT')
 const FAUCET_PASSWORD = config.get('FAUCET_PASSWORD')
 // web3.personal.unlockAccount(FAUCET_ACCOUNT, FAUCET_PASSWORD, 10000000)
 
+router.get('/', (req: express.Request, res: express.Response, next: express.NextFunction): any => {
+  res.render('index')
+});
+
 router.get('/faucet', (req: express.Request, res: express.Response, next: express.NextFunction):any => {
   const faucetAddress = FAUCET_ACCOUNT
   const faucetBalance = web3.fromWei(web3.eth.getBalance(FAUCET_ACCOUNT), 'ether')
