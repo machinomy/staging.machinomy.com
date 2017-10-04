@@ -22,8 +22,8 @@ window.addEventListener("load", function () {
     web3.eth.getAccounts((err, accounts) => {
       const vynocAddress = accounts[0]
       const vynocBalance = web3.fromWei(web3.eth.getBalance(accounts), 'ether')
-      $('vynos-address').html(vynocAddress)
-      $('vynos-balance').html(vynocBalance)
+      $('#vynos-address').html(vynocAddress)
+      $('#vynos-balance').html(vynocBalance)
     })
   })
 });
