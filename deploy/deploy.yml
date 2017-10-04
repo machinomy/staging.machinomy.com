@@ -1,6 +1,5 @@
 ---
 - hosts: all
-  gather_facts: true
 
   vars:
     machinomy_path: '~/machinomy'
@@ -9,73 +8,89 @@
     machinomy_contracts_path: '~/machinomy-contracts'
 
   tasks:
-    - name: machinomy-contracts
+    - name: Clone machinomy-contracts
       git:
         repo: https://github.com/machinomy/machinomy-contracts
         dest: "{{ machinomy_contracts_path }}"
         force: yes
         update: yes
         accept_hostkey: yes
+      register: gitclonemachinomycontracts
 
     - command: yarn install
       args:
         chdir: "{{ machinomy_contracts_path }}"
+      when: gitclonemachinomycontracts.changed
 
-    - name: machinomy
+    - name: Clone machinomy
       git:
         repo: https://github.com/machinomy/machinomy
         dest: "{{ machinomy_path }}"
         force: yes
         update: yes
         accept_hostkey: yes
+      register: gitclonemachinomy
 
     - command: yarn install
       args:
         chdir: "{{ machinomy_path }}"
+      when: gitclonemachinomy.changed
 
     - command: yarn run build
       args:
         chdir: "{{ machinomy_path }}"
+      when: gitclonemachinomy.changed
 
-    - name: ynos
-      git:
-        repo: git@github.com:machinomy/vynos.git
-        dest: "{{ vynos_path }}"
-        force: yes
-        update: yes
-        accept_hostkey: yes
-
-    - command: yarn install
-      args:
-        chdir: "{{ vynos_path }}"
-
-    - command: yarn run build
-      args:
-        chdir: "{{ vynos_path }}"
-
-    - command: yarn run build:harness
-      args:
-        chdir: "{{ vynos_path }}"
-
-    - name: staging
+    - name: Clone staging
       git:
         repo: git@github.com:machinomy/staging.machinomy.com.git
         dest: "{{ staging_path }}"
         force: yes
         update: yes
         accept_hostkey: yes
+      register: gitclonestaging
 
     - command: yarn install
       args:
         chdir: "{{ staging_path }}"
+      when: gitclonestaging.changed
 
     - command: yarn run build
       args:
         chdir: "{{ staging_path }}"
+      when: gitclonestaging.changed
 
     - command: webpack
       args:
         chdir: "{{ staging_path }}"
+      when: gitclonestaging.changed
+
+    - name: Clone vynos
+      git:
+        repo: git@github.com:machinomy/vynos.git
+        dest: "{{ vynos_path }}"
+        accept_hostkey: yes
+      register: gitclonevynos
+
+    - command: yarn install
+      args:
+        chdir: "{{ vynos_path }}"
+      when: gitclonevynos.changed
+
+    - command: git checkout yarn.lock
+      args:
+        chdir: "{{ vynos_path }}"
+      when: gitclonevynos.changed
+
+    - command: yarn run build
+      args:
+        chdir: "{{ vynos_path }}"
+      when: gitclonevynos.changed
+
+    - command: yarn run build:harness
+      args:
+        chdir: "{{ vynos_path }}"
+      when: gitclonevynos.changed
 
     - copy:
         remote_src: true
@@ -88,6 +103,7 @@
         - frame.bundle.js.map
         - worker.bundle.js
         - worker.bundle.js.map
+      when: gitclonevynos.changed
 
     - command: pm2 restart ecosystem.json --env staging
       args:
