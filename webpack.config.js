@@ -7,7 +7,7 @@ var srcPath  = path.join(__dirname, '/public/javascripts/'),
 module.exports = {
     context: srcPath,
     entry: {
-        faucet: './faucet.ts',
+        faucet: './faucet.js',
         paid: './paid.js',
     },
     output: {
