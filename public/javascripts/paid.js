@@ -22,11 +22,12 @@ if (displayButton) {
 let buyButton = document.getElementById('buy')
 if (buyButton) {
   buyButton.onclick = () => {
+    console.log('beforeBuy')
     vynos.ready().then(wallet => {
       let title = 'Outline'
-      let receiver = '0xebeab176c2ca2ae72f11abb1cecad5df6ccb8dfe'
-      let amount = 10000
-      let gateway = 'http://localhost:3001/machinomy'
+      let receiver = '0x508e6569182e0aab365cb9e91f7638fbe34c82fe'
+      let amount = 1000
+      let gateway = 'https://hub.machinomy.com/machinomy'
       return wallet.buy(title, receiver, amount, gateway)
     }).then(result => {
       loadContent(result.token)
