@@ -24,6 +24,7 @@ module.exports = {
         loaders: [{
             test: /\.ts?$/,
             loader: 'ts-loader'
-        }]
+        }, 
+        { test: /\.handlebars$/, loader: "handlebars-loader" }]
     }
 };

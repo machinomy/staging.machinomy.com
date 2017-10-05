@@ -4,10 +4,14 @@ const config = require('config')
 import {web3} from '../helpers/web'
 const FAUCET_ACCOUNT = config.get('FAUCET_ACCOUNT')
 const FAUCET_PASSWORD = config.get('FAUCET_PASSWORD')
-web3.personal.unlockAccount(FAUCET_ACCOUNT, FAUCET_PASSWORD, 10000000)
+// web3.personal.unlockAccount(FAUCET_ACCOUNT, FAUCET_PASSWORD, 10000000)
 
 router.get('/', (req: express.Request, res: express.Response, next: express.NextFunction): any => {
   res.render('index')
+});
+
+router.get('/channels', (req: express.Request, res: express.Response, next: express.NextFunction): any => {
+  res.render('channels')
 });
 
 router.get('/faucet', (req: express.Request, res: express.Response, next: express.NextFunction):any => {

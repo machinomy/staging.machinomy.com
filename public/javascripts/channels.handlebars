@@ -1,0 +1,23 @@
+<table class="ui celled table">
+  <thead>
+    <tr>
+      <th>ChannleId</th>
+      <th>Spent</th>
+      <th>Value</th>
+      <th>State</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each channels}}
+      <tr>
+        <td>{{channelId}}</td>
+        <td>{{spent}}</td>
+        <td>{{value}}</td>
+        <td>{{state}}</td>
+        <td><button id="close" onclick="closeChannel('{{channelId}}')" class="ui secondary basic negative button">close</button></td>
+      </tr>
+    {{/each}}
+    </tbody>
+  </tbody>
+</table>
