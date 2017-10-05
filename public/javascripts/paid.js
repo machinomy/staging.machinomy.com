@@ -28,6 +28,8 @@ if (buyButton) {
       let receiver = '0x508e6569182e0aab365cb9e91f7638fbe34c82fe'
       let amount = 1000
       let gateway = 'https://hub.machinomy.com/machinomy'
+      console.log('wallet')
+      console.log(wallet)
       return wallet.buy(title, receiver, amount, gateway)
     }).then(result => {
       loadContent(result.token)
