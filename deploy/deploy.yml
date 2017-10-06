@@ -22,6 +22,12 @@
         chdir: "{{ machinomy_contracts_path }}"
       when: gitclonemachinomycontracts.changed
 
+    - command: yarn link
+      args:
+        chdir: "{{ machinomy_contracts_path }}"
+      when: gitclonemachinomycontracts.changed
+      become: true
+
     - name: Clone machinomy
       git:
         repo: https://github.com/machinomy/machinomy
@@ -91,19 +97,20 @@
       args:
         chdir: "{{ vynos_path }}"
       when: gitclonevynos.changed
-
-    - copy:
-        remote_src: true
-        src: "{{ vynos_path }}/dist/{{item}}"
-        dest: "{{ staging_path }}/public/"
-      with_items:
-        - vynos.bundle.js
-        - vynos.bundle.js.map
-        - frame.bundle.js
-        - frame.bundle.js.map
-        - worker.bundle.js
-        - worker.bundle.js.map
-      when: gitclonevynos.changed
+     
+    - command: cp -a {{ vynos_path }}/dist/. {{ staging_path }}/public/
+    # - copy:
+    #     remote_src: true
+    #     src: "{{ vynos_path }}/dist/{{item}}"
+    #     dest: "{{ staging_path }}/public/"
+    #   with_items:
+    #     - vynos.bundle.js
+    #     - vynos.bundle.js.map
+    #     - frame.bundle.js
+    #     - frame.bundle.js.map
+    #     - worker.bundle.js
+    #     - worker.bundle.js.map
+    #   when: gitclonevynos.changed
 
     - command: pm2 restart ecosystem.json --env staging
       args:
