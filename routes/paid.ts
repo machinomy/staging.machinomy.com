@@ -42,9 +42,9 @@ router.get('/content', function(req: express.Request, res: express.Response, nex
     }).then((response: RequestResponse)=>{
       let status = JSON.parse(response.body).status
       if (status == 'ok') {
-        res.send('rich content')
+        res.render('bitch', {layout: false})
       } else {
-        res.send('bitch content')
+        res.render('rich', {layout: false})
       }
     })
   })
