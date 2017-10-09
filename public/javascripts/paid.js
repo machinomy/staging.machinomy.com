@@ -35,6 +35,7 @@ if (buyButton) {
       loadContent(result.token)
       channelsBalance()
       console.log('Result: ', result)
+      buyButton.style.display = 'hidden'
     }).catch(err => {
       console.log('Err: ', err)
     })
