@@ -25,9 +25,9 @@ if (buyButton) {
     console.log('beforeBuy')
     vynos.ready().then(wallet => {
       let title = 'Outline'
-      let receiver = '0x508e6569182e0aab365cb9e91f7638fbe34c82fe'
+      let receiver = window.RECEIVER
       let amount = 1000
-      let gateway = 'https://hub.machinomy.com/machinomy'
+      let gateway = window.GATEWAY_URL
       console.log('wallet')
       console.log(wallet)
       return wallet.buy(title, receiver, amount, gateway)
@@ -40,7 +40,6 @@ if (buyButton) {
       console.log('Err: ', err)
     })
   }
-
 }
 
 channelsBalance = () => {
