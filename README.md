@@ -2,7 +2,7 @@
 
 # Run locally
 
-1. Edit `.env` file
+1. Edit `.env` file. Use `example.env` for inspiration.
 2. Change vynos url
 3. Do commands below
 
