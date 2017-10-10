@@ -3,8 +3,7 @@
 # Run locally
 
 1. Edit `.env` file. Use `example.env` for inspiration.
-2. Change vynos url
-3. Do commands below
+2. Do commands below
 
 ```
 yarn install
