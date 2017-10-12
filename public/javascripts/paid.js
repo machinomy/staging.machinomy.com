@@ -82,7 +82,9 @@ closeChannel = (id) => {
 }
 
 window.addEventListener('load', () => {
-  channelsBalance()
-  channels()
+  if (vynos) {
+      channelsBalance()
+      channels()
+  }
   loadContent()
 })
