@@ -30,9 +30,7 @@ if (buyButton) {
       let receiver = window.RECEIVER
       let amount = 1000
       let gateway = window.GATEWAY_URL
-      console.log('wallet')
-      console.log(wallet)
-      return wallet.buy(title, receiver, amount, gateway)
+      return wallet.buy(receiver, amount, gateway)
     }).then(result => {
       loadContent(result.token)
       channelsBalance()
