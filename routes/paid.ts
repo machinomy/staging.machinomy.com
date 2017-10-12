@@ -44,7 +44,7 @@ router.get('/content', function(req: express.Request, res: express.Response, nex
       if (status == 'ok') {
         res.render('rich', {layout: false})
       } else {
-        res.render('bitch', {layout: false})
+        res.status(402).set(paywallHeaders()).render('bitch', {layout: false})
       }
     })
   })
