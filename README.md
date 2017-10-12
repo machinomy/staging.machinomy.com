@@ -1,2 +1,11 @@
-# express-typescript-gulp-seed
-Starter Seed for Node.js, express.js, gulp.js, pug using Typescript 2.x with TSlint and Typings.
+# Staging for Machinomy micropayments on the Web
+
+# Run locally
+
+1. Edit `.env` file. Use `example.env` for inspiration.
+2. Do commands below
+
+```
+yarn install
+yarn start
+```
