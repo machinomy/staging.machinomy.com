@@ -32,7 +32,7 @@ window.addEventListener("load", function () {
                             success: function (data) {
                                 var txid = data.txid;
                                 var etherscanUrl = 'https://ropsten.etherscan.io/tx/' + txid;
-                                $('#faucet-transactions').append('<li><a href="'+ etherscanUrl +'">' + txid + '</a></li>')
+                                $('#faucet-transactions').append('<li><a href="'+ etherscanUrl +'" target="_blank">' + txid + '</a></li>')
                             }
                         })
                     })
