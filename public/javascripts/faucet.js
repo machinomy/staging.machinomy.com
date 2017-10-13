@@ -3,6 +3,13 @@ import * as $ from "jquery"
 document.write('<script src="' + window.VYNOS_URL + '"></script>')
 
 window.addEventListener("load", function () {
+  let displayButton = document.getElementById('display')
+  if (displayButton) {
+    displayButton.onclick = () => {
+      vynos.display()
+    }
+  }
+
   $('#request-ether').click(() => {
     $.ajax({
       type: 'POST',
