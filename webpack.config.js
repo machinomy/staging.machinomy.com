@@ -1,6 +1,8 @@
 var webpack = require('webpack'),
     path = require('path');
 
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
+
 require('dotenv').config({ path: '.env' });
 
 var srcPath  = path.join(__dirname, '/public/javascripts/'),
@@ -34,7 +36,8 @@ module.exports = {
             "window.RECEIVER": JSON.stringify(RECEIVER),
             "window.GATEWAY_URL": JSON.stringify(GATEWAY_URL),
             "window.VYNOS_URL": JSON.stringify(VYNOS_URL)
-        })
+        }),
+	    new UglifyJSPlugin()
     ],
     module: {
         loaders: [
