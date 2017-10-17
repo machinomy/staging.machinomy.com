@@ -3,7 +3,6 @@
   "private": true,
   "scripts": {
     "start": "yarn build && webpack && node bin/www.js",
-    "postinstall": "./node_modules/.bin/typings install",
     "build": "tsc -p tsconfig.json",
     "deploy": "ansible-playbook -i deploy/hosts deploy/deploy.yml"
   },
@@ -47,8 +46,7 @@
     "gulp-copy": "^1.0.0",
     "gulp-nodemon": "^2.2.1",
     "gulp-typescript": "^3.1.4",
-    "tslint-config-standard": "^2.0.0",
-    "typings": "^2.1.0"
+    "tslint-config-standard": "^2.0.0"
   },
   "name": "bred1"
 }
