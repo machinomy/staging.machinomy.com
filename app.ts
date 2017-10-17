@@ -11,6 +11,7 @@ import { router as admin } from './routes/admin'
 
 export let app = express();
 var exphbs = require('express-handlebars')
+var compression = require('compression');
 
 // app.set('views', path.join(__dirname, 'views'))
 var viewsPath = __dirname + "/views"
@@ -25,6 +26,7 @@ app.set("view engine", "handlebars")
 // app.set('view engine', 'pug');
 // app.set('view engine', 'pug');
 
+app.use(compression())
 app.use(logger('dev'))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))

@@ -7,6 +7,9 @@
     staging_path: '~/staging'
     machinomy_contracts_path: '~/machinomy-contracts'
 
+  environment:
+    NODE_ENV: production
+
   tasks:
     - name: Clone machinomy-contracts
       git:
