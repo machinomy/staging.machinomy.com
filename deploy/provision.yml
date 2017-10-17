@@ -10,9 +10,9 @@
     site_dir: /home/vagrant/ynos/dist
     letsencrypt_email: sergey.ukustov@machinomy.com
     yarn_version: '0.27.5'
-    machinomy_path: '~/machinomy'
-    ynos_path: '~/ynos'
-    staging_path: '~/staging'
+    machinomy_path: '/home/ubuntu/machinomy'
+    ynos_path: '/home/ubuntu/ynos'
+    staging_path: '/home/ubuntu/staging'
 
   environment:
     NODE_ENV: vagrant
@@ -104,6 +104,42 @@
         state: absent
       become: yes
 
+    - name: Configure the Yarn APT key
+      apt_key: url=https://dl.yarnpkg.com/debian/pubkey.gpg
+      become: yes
+
+    - name: Add Yarn repository
+      apt_repository:
+        repo: 'deb https://dl.yarnpkg.com/debian/ stable main'
+        state: present
+      become: yes
+
+    - name: Install Yarn
+      apt: pkg=yarn state=present
+      become: yes
+
+    - name: Install gulp
+      npm:
+        name: "{{item}}"
+        global: yes
+      with_items:
+        - gulp
+        - webpack
+        - pm2
+      become: yes
+
+    - name: Install Let's Encrypt package
+      apt:
+        pkg: letsencrypt
+        state: installed
+      become: yes
+
+    - name: Set up DH params
+      command: openssl dhparam -out /etc/ssl/certs/dhparam.pem 2048
+      args:
+        creates: /etc/ssl/certs/dhparam.pem
+      become: yes
+
     - name: Copy the site config
       template:
         src: templates/site.conf.j2
@@ -130,42 +166,16 @@
         state: link
       become: yes
 
-    - name: Configure the Yarn APT key
-      apt_key: url=https://dl.yarnpkg.com/debian/pubkey.gpg
+    - name: Set up Let's Encrypt
+      command: "letsencrypt certonly --webroot --keep-until-expiring --agree-tos --email {{ letsencrypt_email }} -w {{ staging_path }}/public -d {{ site_name }}"
       become: yes
 
-    - name: Add Yarn repository
-      apt_repository:
-        repo: 'deb https://dl.yarnpkg.com/debian/ stable main'
-        state: present
+    - name: Set up Let's Encrypt
+      command: "letsencrypt certonly --webroot --keep-until-expiring --agree-tos --email {{ letsencrypt_email }} -w {{ staging_path }}/public -d {{ hub_name }}"
       become: yes
 
-    - name: Install Yarn
-      apt: pkg=yarn state=present
-      become: yes
-
-    - name: Install gulp
-      npm:
-        name: "{{item}}"
-        global: yes
-      with_items:
-        - gulp
-        - webpack
-        - pm2
-      become: yes
-
-    - name: Creates directory
-      file:
-       path: "/etc/letsencrypt/live/{{site_name}}"
-       state: directory
-      become: yes
-
-    - name: create self-signed SSL cert
-      command: openssl req -new -nodes -x509 -subj "/C=US/ST=Oregon/L=Portland/O=IT/CN=${ansible_fqdn}" -days 3650 -keyout /etc/letsencrypt/live/{{site_name}}/privkey.pem -out /etc/letsencrypt/live/{{site_name}}/fullchain.pem -extensions v3_ca creates=/etc/letsencrypt/live/{{site_name}}/fullchain.pem
-      become: yes
-
-    - name: Restart nginx
+    - name: Reload nginx
       service:
         name: nginx
-        state: restarted
+        state: reloaded
       become: yes

@@ -2,10 +2,10 @@
 - hosts: all
 
   vars:
-    machinomy_path: '~/machinomy'
-    vynos_path: '~/vynos'
-    staging_path: '~/staging'
-    machinomy_contracts_path: '~/machinomy-contracts'
+    machinomy_path: '/home/ubuntu/machinomy'
+    vynos_path: '/home/ubuntu/vynos'
+    staging_path: '/home/ubuntu/staging'
+    machinomy_contracts_path: '/home/ubuntu/machinomy-contracts'
 
   environment:
     NODE_ENV: production
@@ -81,7 +81,7 @@
         accept_hostkey: yes
       register: gitclonevynos
 
-    - command: yarn install
+    - command: NODE_ENV=development yarn install
       args:
         chdir: "{{ vynos_path }}"
       when: gitclonevynos.changed
@@ -102,18 +102,6 @@
       when: gitclonevynos.changed
      
     - command: cp -a {{ vynos_path }}/dist/. {{ staging_path }}/public/
-    # - copy:
-    #     remote_src: true
-    #     src: "{{ vynos_path }}/dist/{{item}}"
-    #     dest: "{{ staging_path }}/public/"
-    #   with_items:
-    #     - vynos.bundle.js
-    #     - vynos.bundle.js.map
-    #     - frame.bundle.js
-    #     - frame.bundle.js.map
-    #     - worker.bundle.js
-    #     - worker.bundle.js.map
-    #   when: gitclonevynos.changed
 
     - command: pm2 restart ecosystem.json --env staging
       args:
