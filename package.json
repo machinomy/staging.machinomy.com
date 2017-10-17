@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "start": "yarn build && webpack && node bin/www.js",
-    "build": "tsc -p tsconfig.json",
+    "build": "tsc -p tsconfig.json; webpack",
     "deploy": "ansible-playbook -i deploy/hosts deploy/deploy.yml"
   },
   "dependencies": {

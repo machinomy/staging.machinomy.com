@@ -69,10 +69,10 @@
         chdir: "{{ staging_path }}"
       when: gitclonestaging.changed
 
-    - command: webpack
-      args:
-        chdir: "{{ staging_path }}"
-      when: gitclonestaging.changed
+    # - command: webpack
+    #   args:
+    #     chdir: "{{ staging_path }}"
+    #   when: gitclonestaging.changed
 
     - name: Clone vynos
       git:
