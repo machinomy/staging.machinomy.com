@@ -40,7 +40,7 @@
         accept_hostkey: yes
       register: gitclonemachinomy
 
-    - command: yarn install
+    - command: yarn install --pure-lockfile
       args:
         chdir: "{{ machinomy_path }}"
       when: gitclonemachinomy.changed
