@@ -1,6 +1,13 @@
 import * as $ from "jquery"
 
-document.write('<script src="' + window.VYNOS_URL + '"></script>')
+(function (d, l) {
+	var e = d.getElementsByTagName('script')[0];
+	var c = d.createElement('script');
+	var src = l.href.match(/dev=true/) ? window.VYNOS_URL.replace('.js', '.dev.js') : window.VYNOS_URL;
+	c.async = true;
+	c.src = src;
+	e.parentElement.insertBefore(c, e);
+})(document, location);
 
 window.addEventListener("load", function () {
     var displayButton = document.getElementById('display')
