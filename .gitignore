@@ -35,4 +35,4 @@ helpers/**/*.js
 bin/**/*.js
 public/**/*.bundle.js
 routes/**/*.js
-build/vynos
+deploy/build

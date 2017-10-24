@@ -74,34 +74,27 @@
     #     chdir: "{{ staging_path }}"
     #   when: gitclonestaging.changed
 
-    - name: Clone vynos
-      git:
-        repo: git@github.com:machinomy/vynos.git
-        dest: "{{ vynos_path }}"
-        accept_hostkey: yes
-      register: gitclonevynos
+    - name: Clone vynos locally
+      local_action: "git repo=git@github.com:machinomy/vynos.git dest=build/vynos update=yes"
 
-    - command: NODE_ENV=development yarn install
-      args:
-        chdir: "{{ vynos_path }}"
-      when: gitclonevynos.changed
+    - name: Install deps for vynos locally
+      local_action: "command chdir=build/vynos yarn install --pure-lockfile"
+      environment:
+        NODE_ENV: development
 
-    - command: git checkout yarn.lock
-      args:
-        chdir: "{{ vynos_path }}"
-      when: gitclonevynos.changed
+    - name: Build vynos locally
+      local_action: "command chdir=build/vynos yarn build"
 
-    - command: yarn run build
-      args:
-        chdir: "{{ vynos_path }}"
-      when: gitclonevynos.changed
+    - name: Build vynos harness locally
+      local_action: "command chdir=build/vynos yarn build:harness"
 
-    - command: yarn run build:harness
-      args:
-        chdir: "{{ vynos_path }}"
-      when: gitclonevynos.changed
-     
-    - command: cp -a {{ vynos_path }}/dist/. {{ staging_path }}/public/
+    - name: Cleanup before copying to the server
+      local_action: "file path=build/vynos/dist/dist state=absent"
+
+    - name: Copy vynos to the server
+      synchronize:
+        src: build/vynos/dist/
+        dest: "{{ staging_path }}/public"
 
     - command: pm2 restart ecosystem.json --env staging
       args:
