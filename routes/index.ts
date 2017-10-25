@@ -2,6 +2,7 @@ import * as express from 'express'
 export let router = express.Router()
 const config = require('config')
 import {web3} from '../helpers/web'
+
 const FAUCET_ACCOUNT = config.get('FAUCET_ACCOUNT')
 const FAUCET_PASSWORD = config.get('FAUCET_PASSWORD')
 
