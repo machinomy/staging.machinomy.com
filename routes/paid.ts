@@ -41,6 +41,7 @@ router.get('/content', function(req: express.Request, res: express.Response, nex
       form: {token: token},
     }).then((response: RequestResponse)=>{
       let status = JSON.parse(response.body).status
+      res.set(paywallHeaders());
       if (status == 'ok') {
         res.render('rich', {layout: false})
       } else {
