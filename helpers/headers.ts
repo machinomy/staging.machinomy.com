@@ -4,6 +4,7 @@ export function paywallHeaders (): object {
   headers['Paywall-Price'] = '0.1'
   headers["Paywall-Address"] = process.env.PAYWALL_ADDRESS || "0xebeab176c2ca2ae72f11abb1cecad5df6ccb8dfe";
   headers['Paywall-Gateway'] = process.env.PAYWALL_GATEWAY || 'http://localhost:3001/machinomy'
+  headers['Paywall-Gateway'] = process.env.PAYWALL_GATEWAY || 'http://localhost:3001/machinomy'
   return headers
 }
 
