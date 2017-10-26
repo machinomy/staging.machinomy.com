@@ -36,7 +36,8 @@ module.exports = {
             "window.RECEIVER": JSON.stringify(RECEIVER),
             "window.GATEWAY_URL": JSON.stringify(GATEWAY_URL),
             "window.VYNOS_URL": JSON.stringify(VYNOS_URL)
-        })
+        }),
+	    new UglifyJSPlugin()
     ],
     module: {
         loaders: [
