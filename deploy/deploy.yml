@@ -2,54 +2,13 @@
 - hosts: all
 
   vars:
-    machinomy_path: '/home/ubuntu/machinomy'
     vynos_path: '/home/ubuntu/vynos'
     staging_path: '/home/ubuntu/staging'
-    machinomy_contracts_path: '/home/ubuntu/machinomy-contracts'
 
   environment:
     NODE_ENV: production
 
   tasks:
-    - name: Clone machinomy-contracts
-      git:
-        repo: https://github.com/machinomy/machinomy-contracts
-        dest: "{{ machinomy_contracts_path }}"
-        force: yes
-        update: yes
-        accept_hostkey: yes
-      register: gitclonemachinomycontracts
-
-    - command: yarn install
-      args:
-        chdir: "{{ machinomy_contracts_path }}"
-      when: gitclonemachinomycontracts.changed
-
-    - command: yarn link
-      args:
-        chdir: "{{ machinomy_contracts_path }}"
-      when: gitclonemachinomycontracts.changed
-      become: true
-
-    - name: Clone machinomy
-      git:
-        repo: https://github.com/machinomy/machinomy
-        dest: "{{ machinomy_path }}"
-        force: yes
-        update: yes
-        accept_hostkey: yes
-      register: gitclonemachinomy
-
-    - command: yarn install --pure-lockfile
-      args:
-        chdir: "{{ machinomy_path }}"
-      when: gitclonemachinomy.changed
-
-    - command: yarn run build
-      args:
-        chdir: "{{ machinomy_path }}"
-      when: gitclonemachinomy.changed
-
     - name: Clone staging
       git:
         repo: git@github.com:machinomy/staging.machinomy.com.git
@@ -68,11 +27,6 @@
       args:
         chdir: "{{ staging_path }}"
       when: gitclonestaging.changed
-
-    # - command: webpack
-    #   args:
-    #     chdir: "{{ staging_path }}"
-    #   when: gitclonestaging.changed
 
     - name: Clone vynos locally
       local_action: "git repo=git@github.com:machinomy/vynos.git dest=build/vynos update=yes"
