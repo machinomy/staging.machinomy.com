@@ -1,17 +1,14 @@
 import * as express from 'express'
 export let router = express.Router()
-const config = require('config')
 import {web3} from '../helpers/web'
 
-const FAUCET_ACCOUNT = config.get('FAUCET_ACCOUNT')
-const FAUCET_PASSWORD = config.get('FAUCET_PASSWORD')
+const FAUCET_ACCOUNT = process.env.FAUCET_ACCOUNT
+if (!FAUCET_ACCOUNT) throw new Error('Please, set receiver address to FAUCET_ACCOUNT env variable')
+const FAUCET_PASSWORD = process.env.FAUCET_PASSWORD
+if (!FAUCET_PASSWORD) throw new Error('Please, set receiver address to FAUCET_PASSWORD env variable')
 
 router.get('/', (req: express.Request, res: express.Response, next: express.NextFunction): any => {
   res.render('index')
-});
-
-router.get('/channels', (req: express.Request, res: express.Response, next: express.NextFunction): any => {
-  res.render('channels')
 });
 
 router.get('/faucet', (req: express.Request, res: express.Response, next: express.NextFunction):any => {

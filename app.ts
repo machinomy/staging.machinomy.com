@@ -7,7 +7,8 @@ import * as bodyParser from 'body-parser'
 
 import { router as routes } from './routes/index'
 import { router as paid } from './routes/paid'
-import { router as admin } from './routes/admin'
+require('dotenv').config()
+
 
 export let app = express();
 var exphbs = require('express-handlebars')
@@ -35,7 +36,6 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 app.use('/', routes)
 app.use('/paid', paid)
-app.use('/admin', admin)
 
 app.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
   let err = new Error('Not Found');

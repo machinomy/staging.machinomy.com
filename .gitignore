@@ -36,3 +36,5 @@ bin/**/*.js
 public/**/*.bundle.js
 routes/**/*.js
 deploy/build
+
+.vscode/

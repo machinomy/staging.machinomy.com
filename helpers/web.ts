@@ -1,7 +1,7 @@
 import Web3 = require("web3")
-const config = require('config')
 
-const ETHEREUM_API = config.get('ETHEREUM_API')
+const ETHEREUM_API = process.env.ETHEREUM_API
+if (!ETHEREUM_API) throw new Error('Please, set receiver address to ETHEREUM_API env variable')
 
 let web3 = new Web3(new Web3.providers.HttpProvider(ETHEREUM_API))
 
