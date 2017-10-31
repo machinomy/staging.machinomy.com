@@ -7,7 +7,7 @@ if (!PAYWALL_GATEWAY) throw new Error('Please, set GATEWAY_URL env variable')
 export function paywallHeaders (): object {
   let headers: { [index: string]: string } = {}
   headers['Paywall-Version'] = '0.0.3'
-  headers['Paywall-Price'] = '0.1'
+  headers['Paywall-Price'] = '1'
   headers["Paywall-Address"] = PAYWALL_ADDRESS
   headers['Paywall-Gateway'] = PAYWALL_GATEWAY 
   headers['Paywall-Meta'] = 'contentidexample'
@@ -17,7 +17,7 @@ export function paywallHeaders (): object {
 export function paywallHeadersERC20(): object {
   let headers: { [index: string]: string } = {}
   headers['Paywall-Version'] = '0.0.3'
-  headers['Paywall-Price'] = '0.1'
+  headers['Paywall-Price'] = '1'
   headers["Paywall-Address"] = PAYWALL_ADDRESS
   headers['Paywall-Gateway'] = PAYWALL_GATEWAY 
   headers['Paywall-Token-Name'] = 'Example ERC20'
