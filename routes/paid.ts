@@ -8,6 +8,8 @@ import Promise = require('bluebird')
 import { RequestResponse, RequiredUriUrl, CoreOptions } from 'request'
 const request: (opts: RequiredUriUrl & CoreOptions) => Promise<RequestResponse> = Promise.promisify(require('request'))
 
+require('dotenv').config()
+
 const PAYWALL_GATEWAY = process.env.GATEWAY_URL
 if (!PAYWALL_GATEWAY) throw new Error('Please, set GATEWAY_URL env variable')
 
