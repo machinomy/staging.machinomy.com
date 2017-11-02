@@ -8,6 +8,9 @@ import Promise = require('bluebird')
 import { RequestResponse, RequiredUriUrl, CoreOptions } from 'request'
 const request: (opts: RequiredUriUrl & CoreOptions) => Promise<RequestResponse> = Promise.promisify(require('request'))
 
+const PAYWALL_GATEWAY = process.env.GATEWAY_URL
+if (!PAYWALL_GATEWAY) throw new Error('Please, set GATEWAY_URL env variable')
+
 const parseToken = (req: express.Request, callback: Function) => {
   let content = req.get(HEADER_NAME)
   if (content) {
@@ -33,7 +36,7 @@ router.get('/erc20', (req: express.Request, res: express.Response, next: express
 });
 
 router.get('/content', function(req: express.Request, res: express.Response, next: express.NextFunction) {
-  let reqUrl = process.env.VERIFY_TOKEN_ADDRESS || 'http://localhost:3001/verify'
+  let reqUrl = process.env.PAYWALL_GATEWAY + '/verify'
   parseToken(req, (error:Error, token:string) => {
     request({
       method: 'GET',

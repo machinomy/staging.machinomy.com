@@ -8,18 +8,14 @@ export function paywallHeaders (): object {
   let headers: { [index: string]: string } = {}
   headers['Paywall-Version'] = '0.0.3'
   headers['Paywall-Price'] = '1'
-  headers["Paywall-Address"] = PAYWALL_ADDRESS
-  headers['Paywall-Gateway'] = PAYWALL_GATEWAY 
+  headers['Paywall-Address'] = PAYWALL_ADDRESS
+  headers['Paywall-Gateway'] = PAYWALL_GATEWAY + '/machinomy'
   headers['Paywall-Meta'] = 'contentidexample'
   return headers
 }
 
 export function paywallHeadersERC20(): object {
-  let headers: { [index: string]: string } = {}
-  headers['Paywall-Version'] = '0.0.3'
-  headers['Paywall-Price'] = '1'
-  headers["Paywall-Address"] = PAYWALL_ADDRESS
-  headers['Paywall-Gateway'] = PAYWALL_GATEWAY 
+  let headers = paywallHeaders()
   headers['Paywall-Token-Name'] = 'Example ERC20'
   headers['Paywall-Token-Ticker'] = 'EEE'
   headers['Paywall-Token-Address'] = process.env.PAYWALL_TOKEN_ADDRESS || '0x8ad5c3cd38676d630b060a09baa40b0a3cb0b4b5'
