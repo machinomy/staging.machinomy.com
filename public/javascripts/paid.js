@@ -9,7 +9,11 @@ let loadContent = (token) => {
 		headers: {
 			authorization: `paywall ${token}`
 		}
-	}).done((data) => {
+	}).done((data, status, response) => {
+		window.paywallMeta = response.getResponseHeader('paywall-meta')
+		window.paywallGateway = response.getResponseHeader('paywall-gateway')
+		window.paywallPrice = response.getResponseHeader('paywall-price')
+		window.paywallAddress = response.getResponseHeader('paywall-address')
 		$("#content").html(data);
 	})
 }
@@ -27,11 +31,12 @@ if (buyButton) {
     console.log('beforeBuy')
     vynos.ready().then(wallet => {
       let title = 'Outline'
-      let receiver = window.RECEIVER
-      let amount = 1000
-      let gateway = window.GATEWAY_URL
+      let receiver = window.paywallAddress
+      let amount = window.paywallPrice
+			let gateway = window.paywallGateway
+			let meta = window.paywallMeta
 
-      return wallet.buy(receiver, amount, gateway)
+      return wallet.buy(receiver, amount, gateway, meta)
     }).then(result => {
       loadContent(result.token)
       channelsBalance()

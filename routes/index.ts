@@ -3,9 +3,9 @@ export let router = express.Router()
 import {web3} from '../helpers/web'
 
 const FAUCET_ACCOUNT = process.env.FAUCET_ACCOUNT
-if (!FAUCET_ACCOUNT) throw new Error('Please, set receiver address to FAUCET_ACCOUNT env variable')
+if (!FAUCET_ACCOUNT) throw new Error('Please, set FAUCET_ACCOUNT env variable')
 const FAUCET_PASSWORD = process.env.FAUCET_PASSWORD
-if (!FAUCET_PASSWORD) throw new Error('Please, set receiver address to FAUCET_PASSWORD env variable')
+if (!FAUCET_PASSWORD) throw new Error('Please, set FAUCET_PASSWORD env variable')
 
 router.get('/', (req: express.Request, res: express.Response, next: express.NextFunction): any => {
   res.render('index')
