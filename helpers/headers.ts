@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 export function paywallHeaders (): object {
   let headers: { [index: string]: string } = {}
   headers['Paywall-Version'] = '0.0.3'
