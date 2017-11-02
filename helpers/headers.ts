@@ -1,5 +1,3 @@
-require('dotenv').config()
-
 const PAYWALL_ADDRESS = process.env.RECEIVER
 if (!PAYWALL_ADDRESS) throw new Error('Please, set RECEIVER env variable')
 

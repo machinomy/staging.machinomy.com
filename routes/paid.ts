@@ -8,9 +8,7 @@ import Promise = require('bluebird')
 import { RequestResponse, RequiredUriUrl, CoreOptions } from 'request'
 const request: (opts: RequiredUriUrl & CoreOptions) => Promise<RequestResponse> = Promise.promisify(require('request'))
 
-require('dotenv').config()
-
-const PAYWALL_GATEWAY = process.env.GATEWAY_URL
+const PAYWALL_GATEWAY = process.env.GATEWAY_URL + '/verify'
 if (!PAYWALL_GATEWAY) throw new Error('Please, set GATEWAY_URL env variable')
 
 const parseToken = (req: express.Request, callback: Function) => {
@@ -38,7 +36,7 @@ router.get('/erc20', (req: express.Request, res: express.Response, next: express
 });
 
 router.get('/content', function(req: express.Request, res: express.Response, next: express.NextFunction) {
-  let reqUrl = process.env.PAYWALL_GATEWAY + '/verify'
+  let reqUrl = PAYWALL_GATEWAY
   parseToken(req, (error:Error, token:string) => {
     request({
       method: 'GET',
