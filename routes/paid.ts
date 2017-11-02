@@ -40,7 +40,7 @@ router.get('/content', function(req: express.Request, res: express.Response, nex
   parseToken(req, (error:Error, token:string) => {
     request({
       method: 'GET',
-      uri: reqUrl + '?' + `token=${token}&price=${paywallHeaders()['Paywall-Price']}&meta=${paywallHeaders()['Paywall-Meta']}`
+      uri: reqUrl + '/v1/verify?' + `token=${token}&price=${paywallHeaders()['Paywall-Price']}&meta=${paywallHeaders()['Paywall-Meta']}`
     }).then((response: RequestResponse)=>{
       let status = JSON.parse(response.body).status
       if (status == 'ok') {

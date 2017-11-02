@@ -9,7 +9,7 @@ export function paywallHeaders (): object {
   headers['Paywall-Version'] = '0.0.3'
   headers['Paywall-Price'] = '1'
   headers['Paywall-Address'] = PAYWALL_ADDRESS
-  headers['Paywall-Gateway'] = PAYWALL_GATEWAY + '/machinomy'
+  headers['Paywall-Gateway'] = PAYWALL_GATEWAY + '/v1/accept'
   headers['Paywall-Meta'] = 'contentidexample'
   return headers
 }
