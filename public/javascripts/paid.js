@@ -46,48 +46,6 @@ if (buyButton) {
   }
 }
 
-channelsBalance = () => {
-	vynos.ready().then(wallet => {
-		wallet.listChannels().then((channels) => {
-			let balance = 0
-			channels.forEach((ch) => {
-				console.log(228)
-				console.log(ch)
-				console.log(ch.value)
-				console.log(ch.spend)
-				balance += ch.value - ch.spent
-			});
-			$('#channels-balance').html(balance)
-		}).catch(err => {
-			console.log('Err: ', err)
-		})
-	})
-}
-
-channels = () => {
-	vynos.ready().then(wallet => {
-		wallet.listChannels().then((channels) => {
-			console.log(channels)
-			var html = template({channels})
-			$('#channles-container').html(html)
-		}).catch(err => {
-			console.log('Err: ', err)
-		})
-	})
-}
-
-closeChannel = (id) => {
-	vynos.ready().then(wallet => {
-		wallet.closeChannel(id).then((res) => {
-			channels()
-		})
-	})
-}
-
 window.addEventListener('load', () => {
-  if (vynos) {
-      channelsBalance()
-      channels()
-  }
   loadContent()
 })
