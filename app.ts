@@ -36,7 +36,7 @@ app.use((req: express.Request, res: express.Response, next: express.NextFunction
   next(err)
 })
 
-if (app.get('env') === 'development') {
+if (app.get('env') !== 'production') {
   app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
     console.log(err.message)
     res.status(err.status || 500)
