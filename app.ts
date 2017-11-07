@@ -38,7 +38,7 @@ app.use((req: express.Request, res: express.Response, next: express.NextFunction
 
 if (app.get('env') !== 'production') {
   app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
-    console.log(err.message)
+    console.error(err.message)
     res.status(err.status || 500)
     res.render('error', {
       message: err.message,
