@@ -4,7 +4,7 @@
   "scripts": {
     "start": "yarn build && webpack && node bin/www.js",
     "build": "tsc -p tsconfig.json && webpack",
-    "deploy": "ansible-playbook -i deploy/hosts deploy/deploy.yml"
+    "lint": "tslint -t stylish -p '.' -e './node_modules/**/*.ts'"    
   },
   "dependencies": {
     "@types/bignumber.js": "^4.0.3",
