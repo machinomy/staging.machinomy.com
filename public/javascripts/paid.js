@@ -1,5 +1,3 @@
-var template = require("./channels.handlebars");
-
 document.write('<script src="' + window.VYNOS_URL + '"></script>')
 
 let loadContent = (token) => {
