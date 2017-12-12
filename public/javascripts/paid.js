@@ -25,27 +25,54 @@ if (displayButton) {
 
 let buyButton = document.getElementById('buy')
 if (buyButton) {
-  buyButton.onclick = () => {
-    console.log('beforeBuy')
-    vynos.ready().then(wallet => {
-      let title = 'Outline'
-      let receiver = window.paywallAddress
-      let amount = window.paywallPrice
+	buyButton.onclick = () => {
+		console.log('beforeBuy')
+		vynos.ready().then(wallet => {
+			let title = 'Outline'
+			let receiver = window.paywallAddress
+			let amount = window.paywallPrice
 			let gateway = window.paywallGateway
 			let meta = window.paywallMeta
 
-      return wallet.buy(receiver, amount, gateway, meta)
-    }).then(result => {
-      loadContent(result.token)
-      channelsBalance()
-      console.log('Result: ', result)
-      buyButton.style.display = 'none'
-    }).catch(err => {
-      console.log('Err: ', err)
-    })
-  }
+			return wallet.buy(receiver, amount, gateway, meta)
+		}).then(result => {
+			loadContent(result.token)
+			console.log('Result: ', result)
+			buyButton.style.display = 'none'
+		}).catch(err => {
+			console.log('Err: ', err)
+		})
+	}
 }
 
 window.addEventListener('load', () => {
-  loadContent()
+	loadContent()
 })
+
+window.send = async (value) => {
+	let eth = 0.01
+	if (value) {
+		eth = value
+	}
+	let wallet = await vynos.ready()
+	let web3 = new Web3(wallet.provider)
+	web3.eth.getAccounts(function (err, accounts) {
+		let account = accounts[0]
+		web3.eth.sendTransaction({ from: account, to: '0x5bf66080c92b81173f470e25f9a12fc146278429', value: web3.toWei(eth, 'ether') }, (err, txid) => {
+			console.log(err)
+			console.log(txid)
+		})
+	})
+}
+
+window.sign = async () => {
+	let wallet = await vynos.ready()
+	let web3 = new Web3(wallet.provider)
+	web3.eth.getAccounts(function (err, accounts) {
+		let account = accounts[0]
+		web3.eth.sign(account, web3.sha3('vynos'), (err, res) => {
+			console.log(err)
+			console.log(res)
+		})
+	})
+}
